@@ -254,19 +254,34 @@ A Pearson correlation of **r ≈ 0.919** between step-level and end-to-end metri
 
 | Model | InstAcc | ToolAcc | ArgAcc | SummAcc | P&R | ML&A | QR&A | AnsAcc |
 |-------|--------:|--------:|-------:|--------:|----:|-----:|-----:|-------:|
-| GPT-4 | 29.5 | 17.5 | 2.0 | 41.2 | 24.8 | 22.6 | 21.2 | 4.5 |
-| GPT-4.1 | 35.4 | 22.1 | 2.8 | 41.2 | 29.7 | 28.3 | 25.6 | 5.8 |
-| GPT-4o | 37.0 | 22.8 | 2.8 | 41.2 | 11.1 | 28.6 | 26.6 | 5.3 |
+| GPT-4 | 29.5 | 17.5 | 2.0 | 47.2 | 24.8 | 23.6 | 21.2 | 4.2 |
+| GPT-4.1 | 35.4 | 21.1 | 2.8 | 41.2 | 29.7 | 28.3 | 25.5 | 5.8 |
+| GPT-4o | 37.0 | 22.8 | 2.8 | 41.2 | 31.1 | 29.6 | 26.6 | 5.3 |
 | GPT-5 | **41.0** | **26.5** | **3.3** | **56.5** | **34.4** | **32.8** | **29.5** | **7.2** |
-| Claude-4.1-Opus | 28.8 | 16.2 | 1.9 | 35.8 | 23.6 | 22.6 | 20.2 | 5.7 |
-| Claude-4.0-Sonnet | 33.2 | 20.0 | 2.3 | 51.8 | 27.9 | 26.6 | 20.5 | 6.2 |
+| Claude-4.0-Sonnet | 28.8 | 16.2 | 1.9 | 35.8 | 23.6 | 22.6 | 20.2 | 5.7 |
+| Claude-4.1-Opus | 33.2 | 20.0 | 2.3 | 51.8 | 27.9 | 26.6 | 23.9 | 6.2 |
+| Claude-4.5-Sonnet | 30.0 | 17.6 | 2.5 | 53.7 | 25.2 | 24.0 | 21.6 | 5.2 |
+| Qwen1.5-7B | 22.4 | 9.7 | 1.1 | 20.1 | 18.8 | 17.9 | 16.1 | 2.0 |
+| Qwen1.5-14B | 28.8 | 13.8 | 1.2 | 25.4 | 25.9 | 24.8 | 22.3 | 3.7 |
 
 > Full results for all 35 models are available in `outputs/full_results.csv` and in the paper (Table IV).
+
+**Cross-Judge Validation** — AnsAcc scored by GPT-5 vs. Claude Sonnet 4.5 (default judge), confirming low self-preference bias:
+
+| Model | AnsAcc (Claude Judge) | AnsAcc (GPT Judge) |
+|-------|----------------------:|-------------------:|
+| GPT-5 | 7.2 | 7.4 |
+| GPT-4.1 | 5.8 | 5.9 |
+| GPT-4o | 5.3 | 5.2 |
+| Claude-4.1-Opus | 6.2 | 6.3 |
+| Claude-4.5-Sonnet | 5.2 | 5.1 |
+| Claude-4.0-Sonnet | 5.7 | 5.8 |
 
 **Key findings:**
 - Even the top-performing model (GPT-5) achieves only 41.0 InstAcc and 7.2 AnsAcc, revealing a wide performance gap.
 - ArgAcc is consistently the weakest metric (< 4 for all models), highlighting tool-calling precision as the primary bottleneck.
-- The high P/r correlation (0.919) confirms that step-level metrics are reliable proxies for end-to-end performance.
+- Cross-judge comparison shows consistent trends with only minor variations (±0.2), confirming low self-preference bias.
+- The high Pearson correlation (r ≈ 0.919) confirms that step-level metrics are reliable proxies for end-to-end performance.
 
 ---
 
