@@ -2,12 +2,10 @@
 
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
-[![IEEE TIFS](https://img.shields.io/badge/IEEE%20TIFS-Published-orange.svg)](https://ieeexplore.ieee.org/)
-[![Paper](https://img.shields.io/badge/Paper-arXiv-red.svg)](#citation)
 
-> **Published in IEEE Transactions on Information Forensics and Security**
+> **Hardik Sharma, Prateek Shaily, Jayant Kumar, Praful Hambarde, Amit Shukla, Sachin Chaudhary**
 >
-> Hardik Sharma, Prateek Shaily, Jayant Kumar, Praful Hambarde, Amit Shukla, Sachin Chaudhary
+> *Submitted to IEEE Transactions on Information Forensics and Security*
 
 ---
 
@@ -15,7 +13,7 @@
 
 The rapid proliferation of sophisticated image manipulation techniques poses significant challenges to media forensics and content authentication. While large language models (LLMs) have shown remarkable reasoning capabilities, their effectiveness as tool-augmented agents for real-world deepfake detection remains largely uncharacterised.
 
-We introduce **DFToolBench-I**, the first comprehensive benchmark designed to evaluate tool-augmented LLM agents on image-based deepfake detection tasks. The benchmark consists of **1,100+ forensic queries** spanning four domains, a catalogue of **12 specialised forensic tools**, and a systematic evaluation of **35 LLMs** under both ReAct (agentic) and end-to-end (direct) settings.
+We introduce **DFToolBench-I**, the first comprehensive benchmark designed to evaluate tool-augmented LLM agents on image-based deepfake detection tasks. The benchmark consists of **1,098 forensic queries** spanning four domains, a catalogue of **12 specialised forensic tools**, and a systematic evaluation of **35 LLMs** under both ReAct (agentic) and end-to-end (direct) settings.
 
 Our evaluation reveals a substantial gap between current LLM capabilities and the demands of rigorous media forensics: even the strongest models score below 45 on step-level instruction accuracy, and under 35 on end-to-end answer accuracy. We further demonstrate a high Pearson correlation (r ≈ 0.919) between step-level and end-to-end metrics, validating our evaluation design. DFToolBench-I provides a reproducible framework—including datasets, tools, evaluation protocols, and scoring code—to drive progress in this critical application domain.
 
@@ -23,7 +21,7 @@ Our evaluation reveals a substantial gap between current LLM capabilities and th
 
 ## Taxonomy of Forensic Domains
 
-DFToolBench-I organises its 1,100+ queries across four high-level forensic domains (Fig. 1 of the paper):
+DFToolBench-I organises its 1,098 queries across four high-level forensic domains (Fig. 1 of the paper):
 
 ```
 DFToolBench-I Taxonomy
@@ -62,13 +60,13 @@ DFToolBench-I ships 12 forensic tools (Table III of the paper). Each tool wraps 
 | `OCR` | EasyOCR (CRAFT detector + CRNN recogniser) | [EasyOCR](https://github.com/JaidedAI/EasyOCR) |
 | `TextForgeryLocalizerTool` | TruFor (CVPR 2023) | [TruFor](https://arxiv.org/abs/2305.10529) |
 | `CopyMoveLocalizationTool` | CIML / ConvXL | [CIML/ConvXL](https://arxiv.org/abs/2401.07802) |
-| `FaceDetectionTool` | EResFD (WACV 2024) | [EResFD](https://arxiv.org/abs/2305.10529) |
-| `SceneChangeDetectionTool` | GeSCF (CVPR 2025) | [GeSCF — Ref 32] |
+| `FaceDetectionTool` | EResFD (WACV 2024) | [EResFD](https://github.com/clovaai/EResFD) |
+| `SceneChangeDetectionTool` | GeSCF (CVPR 2025) | [GeSCF](https://openaccess.thecvf.com/content/CVPR2025/html/Kim_Towards_Generalizable_Scene_Change_Detection_CVPR_2025_paper.html) |
 | `FingerprintingTool` | Artificial GAN Fingerprints (ICCV 2021) | [GAN Fingerprints](https://arxiv.org/abs/2106.10021) |
 | `Calculator` | Python `ast`-safe math evaluator | Built-in |
 | `ObjectDetectionTool` | YOLOE / YOLOv8 | [Ultralytics](https://github.com/ultralytics/ultralytics) |
 | `DeepfakeDetectionTool` | D3 (CLIP ViT-L/14, CVPR 2025) | [D3](https://arxiv.org/abs/2404.04584) |
-| `SegmentationTool` | ASPC-Net (MIML) | [Ref 28] |
+| `SegmentationTool` | ASPC-Net (MIML) | [ASPC-Net](https://openaccess.thecvf.com/content/CVPR2024/html/Qu_Towards_Modern_Image_Manipulation_Localization_A_Large-Scale_Dataset_and_Novel_CVPR_2024_paper.html) |
 | `DenoiseTool` | MaIR (CDNv25, CVPR 2025) | [MaIR](https://arxiv.org/abs/2407.10961) |
 
 ---
@@ -82,10 +80,18 @@ The benchmark draws images from the following publicly available datasets:
 | **CASIA v1 / v2** | Splicing & copy-move forgeries with pixel-level ground truth | [GitHub](https://github.com/namtpham/casia2groundtruth) |
 | **IMD2020** | In-the-wild manipulated images with diverse forgery types | [Download](https://staff.utia.cas.cz/novozada/db/IMD2020.zip) |
 | **SIDA** | Scene insertion & deletion attacks (CVPR 2025) | [arXiv](https://arxiv.org/abs/2501.07479) |
-| **FantasyID / Fanta-ID** | Synthetic identity-document images | Ref 19 in paper |
-| **DefactoCopyMove** | Large-scale copy-move forgery dataset | Ref 18 in paper |
+| **FantasyID / Fanta-ID** | Synthetic identity-document forgery (262 KYC-style ID cards, 13 templates) | [Zenodo](https://zenodo.org/records/17063366) / [arXiv](https://arxiv.org/abs/2507.20808) |
+| **DefactoCopyMove** | ~19,000 copy-move forgeries over MS-COCO (EUSIPCO 2019) | [Website](https://defactodataset.github.io/) / [Kaggle](https://www.kaggle.com/datasets/defactodataset/defactocopymove) |
 | **DoctorBills** | Medical bill document forgery (ICMM 2024) | [Springer](https://link.springer.com/chapter/10.1007/978-3-031-53311-2_15) |
-| **ChangeDetection** | Scene change detection benchmark | Ref 16 in paper |
+| **ChangeDetection** | Scene change detection benchmark (remote sensing) | [Paper](https://ieeexplore.ieee.org/document/7312067) / [Awesome-RSCD](https://github.com/wenhwu/awesome-remote-sensing-change-detection) |
+
+### Benchmark Queries
+
+The full set of **1,098 forensic queries** with structured annotations, ground-truth tool chains, and acceptance criteria is available for download:
+
+| Resource | Description | Access |
+|----------|-------------|--------|
+| **DFToolBench-I Queries** | 1,098 human-authored, step-implicit queries with 12 executable tools | [GitHub Release](https://github.com/hardikbha/image_benchmarking/releases) |
 
 > **Note:** Dataset download and placement instructions are provided in `dftoolbench/data/README.md` after cloning.
 
@@ -96,8 +102,8 @@ The benchmark draws images from the following publicly available datasets:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/<your-org>/DFToolBench-I.git
-cd DFToolBench-I
+git clone https://github.com/hardikbha/image_benchmarking.git
+cd image_benchmarking
 ```
 
 ### 2. Create a base conda environment
@@ -330,20 +336,7 @@ DFToolBench-I/
 
 ## Citation
 
-If you use DFToolBench-I in your research, please cite:
-
-```bibtex
-@article{sharma2025dftoolbench,
-  title     = {{DFToolBench-I}: Benchmarking Tool-Augmented Agents for
-               Image-Based Deepfake Detection},
-  author    = {Sharma, Hardik and Shaily, Prateek and Kumar, Jayant and
-               Hambarde, Praful and Shukla, Amit and Chaudhary, Sachin},
-  journal   = {IEEE Transactions on Information Forensics and Security},
-  year      = {2025},
-  publisher = {IEEE},
-  doi       = {10.1109/TIFS.2025.XXXXXXX}
-}
-```
+The paper is currently under review. Citation details will be updated upon publication.
 
 ---
 
