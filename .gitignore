@@ -1,0 +1,224 @@
+# =============================================================================
+# DFToolBench-I — .gitignore
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Python
+# -----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-wheel-metadata/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+htmlcov/
+junit*.xml
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# pytype
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# Ruff
+.ruff_cache/
+
+# -----------------------------------------------------------------------------
+# Jupyter Notebooks
+# -----------------------------------------------------------------------------
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# -----------------------------------------------------------------------------
+# Virtual environments
+# -----------------------------------------------------------------------------
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Conda environment export (keep env YAMLs, ignore local env dirs)
+# envs/*.yml is tracked; local conda dirs are not
+conda-env/
+
+# -----------------------------------------------------------------------------
+# Model weights & checkpoints  (often very large; store externally)
+# -----------------------------------------------------------------------------
+tool_root/checkpoints/
+tool_root/weights/
+*.pth
+*.pt
+*.ckpt
+*.bin
+*.safetensors
+*.onnx
+*.tflite
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+# Exception: keep small fixture files used by tests
+!tests/fixtures/*.pkl
+
+# -----------------------------------------------------------------------------
+# Dataset images & archives  (download separately)
+# -----------------------------------------------------------------------------
+data/images/
+data/raw/
+data/processed/
+*.zip
+*.tar
+*.tar.gz
+*.tar.bz2
+*.7z
+
+# Exception: keep schema files and small fixture images
+!data/schemas/
+!data/fixtures/
+!tests/fixtures/*.png
+!tests/fixtures/*.jpg
+
+# -----------------------------------------------------------------------------
+# Evaluation outputs & logs
+# -----------------------------------------------------------------------------
+outputs/
+logs/
+*.log
+*.log.*
+nohup.out
+wandb/
+mlruns/
+runs/
+
+# Temporary PID files created by server scripts
+.tool_server.pid
+.bridge_server.pid
+
+# -----------------------------------------------------------------------------
+# IDE & editor files
+# -----------------------------------------------------------------------------
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains (PyCharm, IntelliJ, etc.)
+.idea/
+*.iml
+*.iws
+
+# Vim / Neovim
+*.swp
+*.swo
+*~
+Session.vim
+.netrwhist
+
+# Emacs
+*#
+.#*
+\#*\#
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+
+# -----------------------------------------------------------------------------
+# Secrets & credentials  (NEVER commit these)
+# -----------------------------------------------------------------------------
+.env
+.env.*
+*.env
+secrets.yaml
+secrets.json
+credentials.json
+api_keys.txt
+*_key.txt
+*_secret.txt
+*.pem
+*.p12
+*.pfx
+*.key
+*.crt
+*.cer
+service_account*.json
+gcloud_*.json
+
+# -----------------------------------------------------------------------------
+# Sphinx documentation build
+# -----------------------------------------------------------------------------
+docs/_build/
+docs/api/
+
+# -----------------------------------------------------------------------------
+# Miscellaneous
+# -----------------------------------------------------------------------------
+*.bak
+*.orig
+*.tmp
+*.temp
+.scratch/
+scratch/
+tmp/
+temp/

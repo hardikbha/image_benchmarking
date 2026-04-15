@@ -1,0 +1,282 @@
+# DFToolBench-I model configurations
+# Covers the 35 LLMs evaluated in the benchmark.
+#
+# Fields per model
+# ----------------
+# name          : Human-readable display name used in result tables.
+# model_id      : Model identifier string passed to the API / local runner.
+# family        : Model family (gpt / claude / qwen / internlm / other).
+# provider      : API provider: openai | anthropic | local
+# size          : Approximate parameter count as a string (e.g. "7B").
+# tool_calling  : Whether the model supports native tool/function calling.
+# notes         : Optional free-form annotation.
+
+models:
+
+  # --------------------------------------------------------------------------
+  # GPT family (OpenAI)
+  # --------------------------------------------------------------------------
+
+  - name: GPT-5
+    model_id: gpt-5
+    family: gpt
+    provider: openai
+    size: unknown
+    tool_calling: true
+    notes: "Latest GPT-5 flagship model."
+
+  - name: GPT-4.1
+    model_id: gpt-4.1
+    family: gpt
+    provider: openai
+    size: unknown
+    tool_calling: true
+    notes: "GPT-4.1 release."
+
+  - name: GPT-4o
+    model_id: gpt-4o
+    family: gpt
+    provider: openai
+    size: unknown
+    tool_calling: true
+    notes: "GPT-4 omni multimodal model."
+
+  - name: GPT-4
+    model_id: gpt-4
+    family: gpt
+    provider: openai
+    size: unknown
+    tool_calling: true
+    notes: "Original GPT-4 model."
+
+  # --------------------------------------------------------------------------
+  # Claude family (Anthropic)
+  # --------------------------------------------------------------------------
+
+  - name: Claude-4.1-Opus
+    model_id: claude-opus-4-1
+    family: claude
+    provider: anthropic
+    size: unknown
+    tool_calling: true
+    notes: "Claude 4.1 Opus — most capable Anthropic model."
+
+  - name: Claude-4.0-Sonnet
+    model_id: claude-sonnet-4-0
+    family: claude
+    provider: anthropic
+    size: unknown
+    tool_calling: true
+    notes: "Claude 4.0 Sonnet."
+
+  - name: Claude-4.5-Sonnet
+    model_id: claude-sonnet-4-5
+    family: claude
+    provider: anthropic
+    size: unknown
+    tool_calling: true
+    notes: "Claude 4.5 Sonnet."
+
+  # --------------------------------------------------------------------------
+  # Qwen family (Alibaba / local)
+  # --------------------------------------------------------------------------
+
+  - name: Qwen1.5-7B
+    model_id: Qwen/Qwen1.5-7B-Chat
+    family: qwen
+    provider: local
+    size: "7B"
+    tool_calling: false
+    notes: "Qwen 1.5 series, 7B parameter variant."
+
+  - name: Qwen2.5-14B
+    model_id: Qwen/Qwen2.5-14B-Instruct
+    family: qwen
+    provider: local
+    size: "14B"
+    tool_calling: true
+    notes: "Qwen 2.5 series, 14B parameter variant."
+
+  - name: Qwen2.5-32B
+    model_id: Qwen/Qwen2.5-32B-Instruct
+    family: qwen
+    provider: local
+    size: "32B"
+    tool_calling: true
+    notes: "Qwen 2.5 series, 32B parameter variant."
+
+  - name: Qwen2-7B
+    model_id: Qwen/Qwen2-7B-Instruct
+    family: qwen
+    provider: local
+    size: "7B"
+    tool_calling: true
+    notes: "Qwen 2 series, 7B parameter variant."
+
+  - name: Qwen2-14B
+    model_id: Qwen/Qwen2-14B-Instruct
+    family: qwen
+    provider: local
+    size: "14B"
+    tool_calling: true
+    notes: "Qwen 2 series, 14B parameter variant."
+
+  - name: Qwen2-32B
+    model_id: Qwen/Qwen2-32B-Instruct
+    family: qwen
+    provider: local
+    size: "32B"
+    tool_calling: true
+    notes: "Qwen 2 series, 32B parameter variant."
+
+  - name: Qwen3-8B
+    model_id: Qwen/Qwen3-8B
+    family: qwen
+    provider: local
+    size: "8B"
+    tool_calling: true
+    notes: "Qwen 3 series, 8B parameter variant."
+
+  - name: Qwen3-14B
+    model_id: Qwen/Qwen3-14B
+    family: qwen
+    provider: local
+    size: "14B"
+    tool_calling: true
+    notes: "Qwen 3 series, 14B parameter variant."
+
+  - name: Qwen3-32B
+    model_id: Qwen/Qwen3-32B
+    family: qwen
+    provider: local
+    size: "32B"
+    tool_calling: true
+    notes: "Qwen 3 series, 32B parameter variant."
+
+  # --------------------------------------------------------------------------
+  # InternLM family (Shanghai AI Laboratory / local)
+  # --------------------------------------------------------------------------
+
+  - name: InternLM2-7B
+    model_id: internlm/internlm2-chat-7b
+    family: internlm
+    provider: local
+    size: "7B"
+    tool_calling: true
+    notes: "InternLM 2 series, 7B parameter chat model."
+
+  - name: InternLM2-20B
+    model_id: internlm/internlm2-chat-20b
+    family: internlm
+    provider: local
+    size: "20B"
+    tool_calling: true
+    notes: "InternLM 2 series, 20B parameter chat model."
+
+  - name: InternLM2.5-7B
+    model_id: internlm/internlm2_5-7b-chat
+    family: internlm
+    provider: local
+    size: "7B"
+    tool_calling: true
+    notes: "InternLM 2.5 series, 7B parameter chat model."
+
+  - name: InternLM2.5-20B
+    model_id: internlm/internlm2_5-20b-chat
+    family: internlm
+    provider: local
+    size: "20B"
+    tool_calling: true
+    notes: "InternLM 2.5 series, 20B parameter chat model."
+
+  - name: InternLM3-8B
+    model_id: internlm/internlm3-8b-instruct
+    family: internlm
+    provider: local
+    size: "8B"
+    tool_calling: true
+    notes: "InternLM 3 series, 8B parameter instruct model."
+
+  # --------------------------------------------------------------------------
+  # Other / open-weight models
+  # --------------------------------------------------------------------------
+
+  - name: Mistral-7B
+    model_id: mistralai/Mistral-7B-Instruct-v0.3
+    family: other
+    provider: local
+    size: "7B"
+    tool_calling: true
+    notes: "Mistral 7B Instruct v0.3."
+
+  - name: Pythia-6.9B
+    model_id: EleutherAI/pythia-6.9b-deduped
+    family: other
+    provider: local
+    size: "6.9B"
+    tool_calling: false
+    notes: "EleutherAI Pythia 6.9B (deduped) — causal LM baseline."
+
+  - name: Pythia-12B
+    model_id: EleutherAI/pythia-12b-deduped
+    family: other
+    provider: local
+    size: "12B"
+    tool_calling: false
+    notes: "EleutherAI Pythia 12B (deduped) — causal LM baseline."
+
+  - name: MPT-7B
+    model_id: mosaicml/mpt-7b-instruct
+    family: other
+    provider: local
+    size: "7B"
+    tool_calling: false
+    notes: "MosaicML MPT-7B Instruct."
+
+  - name: MPT-30B
+    model_id: mosaicml/mpt-30b-instruct
+    family: other
+    provider: local
+    size: "30B"
+    tool_calling: false
+    notes: "MosaicML MPT-30B Instruct."
+
+  - name: Cerebras-GPT-6.7B
+    model_id: cerebras/Cerebras-GPT-6.7B
+    family: other
+    provider: local
+    size: "6.7B"
+    tool_calling: false
+    notes: "Cerebras-GPT 6.7B — trained on The Pile."
+
+  - name: Cerebras-GPT-13B
+    model_id: cerebras/Cerebras-GPT-13B
+    family: other
+    provider: local
+    size: "13B"
+    tool_calling: false
+    notes: "Cerebras-GPT 13B — trained on The Pile."
+
+  - name: GPT-NeoX-20B
+    model_id: EleutherAI/gpt-neox-20b
+    family: other
+    provider: local
+    size: "20B"
+    tool_calling: false
+    notes: "EleutherAI GPT-NeoX 20B — trained on The Pile."
+
+  - name: OpenLLaMA-7B
+    model_id: openlm-research/open_llama_7b_v2
+    family: other
+    provider: local
+    size: "7B"
+    tool_calling: false
+    notes: "OpenLLaMA 7B v2 — open reproduction of LLaMA."
+
+  - name: OpenLLaMA-13B
+    model_id: openlm-research/open_llama_13b
+    family: other
+    provider: local
+    size: "13B"
+    tool_calling: false
+    notes: "OpenLLaMA 13B — open reproduction of LLaMA."

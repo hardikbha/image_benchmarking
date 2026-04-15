@@ -1,0 +1,362 @@
+{
+  "_comment": "DFToolBench-I tool metadata (Table III of the paper). 12 tools across three categories: P&R, ML&A, QR&A.",
+  "tools": [
+    {
+      "name": "OCR",
+      "category": "P&R",
+      "description": "Extract all visible text from an image using Optical Character Recognition. Returns the recognised text as a plain string.",
+      "inputs": [
+        {
+          "name": "image_path",
+          "type": "string",
+          "desc": "Absolute path to the input image file.",
+          "optional": false,
+          "default": null
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "desc": "ISO 639-1 language hint for the OCR engine (e.g. 'en', 'zh'). Improves accuracy on multilingual content.",
+          "optional": true,
+          "default": "en"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "string",
+          "desc": "Recognised text content extracted from the image."
+        }
+      ]
+    },
+    {
+      "name": "FaceDetectionTool",
+      "category": "P&R",
+      "description": "Detect human faces in an image and return their bounding boxes, landmark coordinates, and detection confidence scores.",
+      "inputs": [
+        {
+          "name": "image_path",
+          "type": "string",
+          "desc": "Absolute path to the input image file.",
+          "optional": false,
+          "default": null
+        },
+        {
+          "name": "confidence_threshold",
+          "type": "float",
+          "desc": "Minimum detection confidence score in [0, 1]. Detections below this threshold are discarded.",
+          "optional": true,
+          "default": 0.5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "faces",
+          "type": "string",
+          "desc": "JSON-encoded list of detected face objects. Each object contains 'bbox' ([x1,y1,x2,y2] in pixels), 'landmarks' (dict of 5-point facial landmarks), and 'score' (float confidence)."
+        }
+      ]
+    },
+    {
+      "name": "ObjectDetectionTool",
+      "category": "P&R",
+      "description": "Detect and classify objects in an image using a general-purpose object detector. Returns bounding boxes, class labels, and confidence scores.",
+      "inputs": [
+        {
+          "name": "image_path",
+          "type": "string",
+          "desc": "Absolute path to the input image file.",
+          "optional": false,
+          "default": null
+        },
+        {
+          "name": "confidence_threshold",
+          "type": "float",
+          "desc": "Minimum confidence score in [0, 1] for a detection to be included in the output.",
+          "optional": true,
+          "default": 0.5
+        },
+        {
+          "name": "classes",
+          "type": "list",
+          "desc": "Optional list of class names (strings) to filter results. If null, all classes are returned.",
+          "optional": true,
+          "default": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "detections",
+          "type": "string",
+          "desc": "JSON-encoded list of detection objects. Each object contains 'label' (class name), 'bbox' ([x1,y1,x2,y2] in pixels), and 'score' (float confidence)."
+        }
+      ]
+    },
+    {
+      "name": "DeepfakeDetectionTool",
+      "category": "P&R",
+      "description": "Classify whether a face image or video frame has been synthetically generated or manipulated by a deepfake model. Returns a binary label and a probability score.",
+      "inputs": [
+        {
+          "name": "image_path",
+          "type": "string",
+          "desc": "Absolute path to the input image or video frame file.",
+          "optional": false,
+          "default": null
+        },
+        {
+          "name": "model_name",
+          "type": "string",
+          "desc": "Name of the deepfake detection backbone to use (e.g. 'xceptionnet', 'efficientnet-b4'). Falls back to the default model if not specified.",
+          "optional": true,
+          "default": "xceptionnet"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result",
+          "type": "string",
+          "desc": "JSON-encoded object with 'label' ('real' or 'fake') and 'score' (float probability that the image is fake, range 0–1)."
+        }
+      ]
+    },
+    {
+      "name": "AnomalyDetectionTool",
+      "category": "P&R",
+      "description": "Detect and localise anomalous pixel regions in an image using the PatchGuard model (DINOv2 ViT-S/14 backbone + Discriminator transformer). Returns a binary anomaly mask and the percentage of anomalous pixels.",
+      "inputs": [
+        {
+          "name": "image_path",
+          "type": "string",
+          "desc": "Absolute path to the input image file.",
+          "optional": false,
+          "default": null
+        },
+        {
+          "name": "threshold",
+          "type": "float",
+          "desc": "Binarisation threshold applied to the continuous anomaly score map (range 0–1). Lower values flag more pixels as anomalous.",
+          "optional": true,
+          "default": 0.5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result",
+          "type": "string",
+          "desc": "JSON-encoded object with 'mask_path' (absolute path to the saved binary anomaly mask PNG) and 'anomaly_pct' (float, percentage of anomalous pixels in range 0–100)."
+        }
+      ]
+    },
+    {
+      "name": "FingerprintingTool",
+      "category": "P&R",
+      "description": "Extract a perceptual fingerprint (hash or embedding) from an image that can be used to identify its provenance, detect near-duplicate images, or attribute it to a specific generative model.",
+      "inputs": [
+        {
+          "name": "image_path",
+          "type": "string",
+          "desc": "Absolute path to the input image file.",
+          "optional": false,
+          "default": null
+        },
+        {
+          "name": "method",
+          "type": "string",
+          "desc": "Fingerprinting algorithm to use. Options: 'phash' (perceptual hash), 'dct' (DCT-based hash), 'embedding' (deep feature vector).",
+          "optional": true,
+          "default": "phash"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "fingerprint",
+          "type": "string",
+          "desc": "JSON-encoded object with 'method' (string) and 'value' (hex string for hash methods, or JSON array of floats for embedding)."
+        }
+      ]
+    },
+    {
+      "name": "DenoiseTool",
+      "category": "ML&A",
+      "description": "Remove noise from an image to reveal underlying content or to pre-process it for downstream forensic analysis.",
+      "inputs": [
+        {
+          "name": "image_path",
+          "type": "string",
+          "desc": "Absolute path to the noisy input image file.",
+          "optional": false,
+          "default": null
+        },
+        {
+          "name": "strength",
+          "type": "float",
+          "desc": "Denoising strength in [0, 1]. Higher values apply more aggressive noise removal at the potential cost of fine detail.",
+          "optional": true,
+          "default": 0.5
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "desc": "Absolute path where the denoised image will be saved. If null, a path is derived automatically from image_path.",
+          "optional": true,
+          "default": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "denoised_path",
+          "type": "string",
+          "desc": "Absolute path to the saved denoised image file."
+        }
+      ]
+    },
+    {
+      "name": "SegmentationTool",
+      "category": "ML&A",
+      "description": "Perform semantic or instance segmentation on an image, producing a labelled mask where each pixel is assigned a class or instance ID.",
+      "inputs": [
+        {
+          "name": "image_path",
+          "type": "string",
+          "desc": "Absolute path to the input image file.",
+          "optional": false,
+          "default": null
+        },
+        {
+          "name": "mode",
+          "type": "string",
+          "desc": "Segmentation mode: 'semantic' (per-class pixel labels) or 'instance' (per-object instance masks).",
+          "optional": true,
+          "default": "semantic"
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "desc": "Absolute path where the segmentation mask image will be saved. If null, derived from image_path.",
+          "optional": true,
+          "default": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result",
+          "type": "string",
+          "desc": "JSON-encoded object with 'mask_path' (absolute path to the label mask PNG) and 'labels' (list of present class/instance label strings)."
+        }
+      ]
+    },
+    {
+      "name": "TextForgeryLocalizerTool",
+      "category": "ML&A",
+      "description": "Localise regions of text that have been digitally forged or altered in an image (e.g. changed digits, swapped words) and return a binary manipulation mask.",
+      "inputs": [
+        {
+          "name": "image_path",
+          "type": "string",
+          "desc": "Absolute path to the input image (typically a document or sign).",
+          "optional": false,
+          "default": null
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "desc": "Absolute path where the forgery localisation mask will be saved. If null, derived from image_path.",
+          "optional": true,
+          "default": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result",
+          "type": "string",
+          "desc": "JSON-encoded object with 'mask_path' (absolute path to the binary forgery mask PNG) and 'forged_pct' (float, percentage of text pixels flagged as forged)."
+        }
+      ]
+    },
+    {
+      "name": "CopyMoveLocalizationTool",
+      "category": "ML&A",
+      "description": "Detect copy-move forgery in an image — identifying regions that have been duplicated and pasted elsewhere within the same image — and return source and destination masks.",
+      "inputs": [
+        {
+          "name": "image_path",
+          "type": "string",
+          "desc": "Absolute path to the input image file.",
+          "optional": false,
+          "default": null
+        },
+        {
+          "name": "output_dir",
+          "type": "string",
+          "desc": "Directory where output mask images are saved. If null, a subdirectory alongside image_path is used.",
+          "optional": true,
+          "default": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result",
+          "type": "string",
+          "desc": "JSON-encoded object with 'source_mask_path', 'dest_mask_path' (absolute paths to binary PNG masks marking copied and pasted regions), and 'detected' (boolean)."
+        }
+      ]
+    },
+    {
+      "name": "SceneChangeDetectionTool",
+      "category": "ML&A",
+      "description": "Detect abrupt or gradual scene changes (cuts, splices) in a video and return a list of change-point frame indices with associated confidence scores.",
+      "inputs": [
+        {
+          "name": "video_path",
+          "type": "string",
+          "desc": "Absolute path to the input video file.",
+          "optional": false,
+          "default": null
+        },
+        {
+          "name": "threshold",
+          "type": "float",
+          "desc": "Detection threshold in [0, 1]. Lower values are more sensitive (more candidate change-points).",
+          "optional": true,
+          "default": 0.5
+        },
+        {
+          "name": "min_scene_length",
+          "type": "int",
+          "desc": "Minimum number of frames between consecutive detected scene changes.",
+          "optional": true,
+          "default": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result",
+          "type": "string",
+          "desc": "JSON-encoded object with 'change_points' (list of {frame_index, timestamp_s, score} objects) and 'num_scenes' (int)."
+        }
+      ]
+    },
+    {
+      "name": "Calculator",
+      "category": "QR&A",
+      "description": "Evaluate a mathematical expression and return the numeric result. Supports standard arithmetic (+, -, *, /), exponentiation (**), integer division (//), modulo (%), parentheses, and common mathematical functions (sqrt, log, abs, round, min, max, floor, ceil).",
+      "inputs": [
+        {
+          "name": "expression",
+          "type": "string",
+          "desc": "A valid Python-compatible mathematical expression string, e.g. '(3.14 * 5 ** 2) / 2' or 'sqrt(144) + log(100, 10)'.",
+          "optional": false,
+          "default": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result",
+          "type": "string",
+          "desc": "JSON-encoded object with 'value' (the numeric result as a float or int) and 'expression' (the original expression string)."
+        }
+      ]
+    }
+  ]
+}

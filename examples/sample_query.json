@@ -1,0 +1,128 @@
+[
+  {
+    "query_id": "DFToolBench-I-Q0001",
+    "domain": "Document Forgery",
+    "sub_domain": "Medical bill tampering",
+    "dataset": "DoctorBills",
+    "image_path": "data/images/doctorbills/sample_001.jpg",
+    "question": "The attached medical bill is suspected to have been tampered with. Identify whether any text regions have been forged and localise the suspicious area. Also extract all readable text and report any inconsistencies in the billing figures.",
+    "expected_tools": [
+      {
+        "step": 1,
+        "tool": "OCR",
+        "args": {
+          "image_path": "data/images/doctorbills/sample_001.jpg"
+        },
+        "expected_output_contains": ["TOTAL", "DATE", "PATIENT"],
+        "rationale": "Extract all text and bounding boxes from the document before performing forgery localisation."
+      },
+      {
+        "step": 2,
+        "tool": "TextForgeryLocalizerTool",
+        "args": {
+          "image_path": "data/images/doctorbills/sample_001.jpg"
+        },
+        "expected_output_contains": ["mask_path", "integrity_score"],
+        "rationale": "Run TruFor to produce a pixel-level forgery heatmap and an integrity score. A score below 0.5 strongly indicates tampering."
+      },
+      {
+        "step": 3,
+        "tool": "Calculator",
+        "args": {
+          "expression": "<sum_of_line_items_from_ocr>"
+        },
+        "expected_output_contains": [],
+        "rationale": "Verify that the sum of individual line items equals the stated total. A mismatch indicates numerical tampering."
+      }
+    ],
+    "reference_answer": "The image shows evidence of text tampering. The TruFor integrity score is below 0.5, and the forgery heatmap highlights the 'TOTAL' field region as manipulated. OCR extraction reveals that the sum of individual charges does not equal the stated total, confirming numerical alteration.",
+    "ground_truth": {
+      "is_manipulated": true,
+      "manipulation_type": "text_forgery",
+      "manipulated_region_description": "TOTAL field and associated numerical values",
+      "confidence": "high"
+    },
+    "step_level_labels": {
+      "inst_acc": 1.0,
+      "tool_acc": 1.0,
+      "arg_acc": 1.0,
+      "summ_acc": 0.9
+    },
+    "e2e_labels": {
+      "ans_acc": 1,
+      "ml_a": 0.85,
+      "qr_a": 0.92
+    },
+    "metadata": {
+      "difficulty": "medium",
+      "num_required_tools": 3,
+      "reasoning_hops": 3,
+      "source_paper_ref": "Ref 20 — ICMM 2024",
+      "license": "CC BY 4.0"
+    }
+  },
+  {
+    "query_id": "DFToolBench-I-Q0002",
+    "domain": "Identity & Credential Forensics",
+    "sub_domain": "Face swap / deepfake detection",
+    "dataset": "FaceForensics++ / SIDA",
+    "image_path": "data/images/sida/sample_002.jpg",
+    "question": "This portrait image is alleged to contain a GAN-generated face swap. (a) Detect and localise all faces in the image. (b) Determine whether the detected faces exhibit deepfake artefacts. (c) Check whether any known GAN fingerprint is present in the image. Provide a consolidated verdict.",
+    "expected_tools": [
+      {
+        "step": 1,
+        "tool": "FaceDetectionTool",
+        "args": {
+          "image_path": "data/images/sida/sample_002.jpg",
+          "confidence_threshold": 0.7
+        },
+        "expected_output_contains": ["bbox", "confidence", "num_faces"],
+        "rationale": "Use EResFD to detect and localise all face bounding boxes before deepfake classification."
+      },
+      {
+        "step": 2,
+        "tool": "DeepfakeDetectionTool",
+        "args": {
+          "image_path": "data/images/sida/sample_002.jpg"
+        },
+        "expected_output_contains": ["deepfake_score", "label"],
+        "rationale": "Run D3 (CLIP ViT-L/14) to produce a deepfake confidence score. A score > 0.5 indicates a synthetic face."
+      },
+      {
+        "step": 3,
+        "tool": "FingerprintingTool",
+        "args": {
+          "image_path": "data/images/sida/sample_002.jpg"
+        },
+        "expected_output_contains": ["fingerprint_match", "gan_model"],
+        "rationale": "Check for an embedded GAN fingerprint to identify the specific generative model used, if any."
+      }
+    ],
+    "reference_answer": "FaceDetectionTool identifies one face with high confidence (bbox: [x1, y1, x2, y2]). DeepfakeDetectionTool returns a deepfake score of 0.87, indicating strong evidence of face manipulation. FingerprintingTool detects a fingerprint consistent with StyleGAN3. Consolidated verdict: the image contains a GAN-generated deepfake face with high confidence.",
+    "ground_truth": {
+      "is_manipulated": true,
+      "manipulation_type": "face_swap_gan",
+      "source_model": "StyleGAN3",
+      "num_faces": 1,
+      "confidence": "high"
+    },
+    "step_level_labels": {
+      "inst_acc": 1.0,
+      "tool_acc": 1.0,
+      "arg_acc": 0.95,
+      "summ_acc": 0.88
+    },
+    "e2e_labels": {
+      "ans_acc": 1,
+      "ml_a": 0.90,
+      "qr_a": 0.94
+    },
+    "metadata": {
+      "difficulty": "hard",
+      "num_required_tools": 3,
+      "reasoning_hops": 3,
+      "source_paper_ref": "SIDA — arXiv:2501.07479",
+      "license": "CC BY-NC 4.0"
+    }
+  }
+]
